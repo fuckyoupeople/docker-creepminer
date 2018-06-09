@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  miner:
+    volumes:
+      - ./config:/config
+      # for linux
+      # - /mnt/usbdisk1/plots:/mnt/usbdisk1/plots
+      # - /mnt/usbdisk2/plots:/mnt/usbdisk2/plots
+      # - /mnt/usbdisk3/plots:/mnt/usbdisk3/plots
+      # - /mnt/usbdisk4/plots:/mnt/usbdisk4/plots
+      # for windows
+      - e:\plots:/mnt/usbdisk1/plots
+      - g:\plots:/mnt/usbdisk2/plots
+      - h:\plots:/mnt/usbdisk3/plots
+      - i:\plots:/mnt/usbdisk4/plots
+      # for macOS
+      # - /Volumes/usbdisk1/plots:/mnt/usbdisk1/plots
+      # - /Volumes/usbdisk2/plots:/mnt/usbdisk2/plots
+      # - /Volumes/usbdisk3/plots:/mnt/usbdisk3/plots
+      # - /Volumes/usbdisk4/plots:/mnt/usbdisk4/plots
+    environment:
+      - AUTO_START=TRUE
+      - FRONTAIL=TRUE
+      - C_SCRIPT=test.sh
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "5"
