@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER Wayne Humphrey <wayne@humphrey.za.net>
 LABEL version="1.4"
+ENV BRANCH_NAME=master
 
 # Set some env variables as we mostly work in non interactive mode
 RUN echo "export VISIBLE=now" >> /etc/profile
@@ -20,13 +21,13 @@ RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
 RUN cd /tmp/ \
   && pip install --upgrade pip \
   && pip2.7 install conan \
-  && git clone -b development https://github.com/Creepsky/creepMiner \
+  && git clone -b ${BRANCH_NAME} https://github.com/Creepsky/creepMiner \
   && cd creepMiner \
   && conan install . -s compiler.libcxx=libstdc++11 --build=missing \
   && cmake CMakeLists.txt -DCMAKE_BUILD_TYPE=RELEASE -DUSE_CUDA=OFF \
   && make -j$(nproc) \
   && cp -r resources/public /usr/local/sbin/ \
-  && cp -r resources/frontail.json /etc/ \
+  && ( [ -f resources/frontail.json ] && cp -r resources/frontail.json /etc/ || : ) \
   && cp -r src/shabal/opencl/mining.cl /usr/local/sbin/ \
   && cp -r bin/creepMiner /usr/local/sbin/ \
   && sed -i '2s/creepMiner/creepContainer/' /usr/local/sbin/public/js/general.js \
