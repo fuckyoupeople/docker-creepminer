@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER Wayne Humphrey <wayne@humphrey.za.net>
 LABEL version="1.4"
-ENV BRANCH_NAME=master
+ARG BRANCH_NAME=master
 
 # Set some env variables as we mostly work in non interactive mode
 RUN echo "export VISIBLE=now" >> /etc/profile

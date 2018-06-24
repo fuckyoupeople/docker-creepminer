@@ -19,6 +19,9 @@ services:
       # - /Volumes/usbdisk2/plots:/mnt/usbdisk2/plots
       # - /Volumes/usbdisk3/plots:/mnt/usbdisk3/plots
       # - /Volumes/usbdisk4/plots:/mnt/usbdisk4/plots
+    build:
+      args:
+        - BRANCH_NAME=master
     environment:
       - AUTO_START=TRUE
       - FRONTAIL=TRUE
